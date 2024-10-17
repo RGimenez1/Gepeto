@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { FC } from "react"
-import CinemaAISVG from "../icons/cinemaAI_logo_rounded.webp"
+import CinemaAISVG from "../icons/logo-sn.png"
 
 interface BrandProps {
   theme?: "dark" | "light"
@@ -22,7 +22,9 @@ export const Brand: FC<BrandProps> = ({ theme = "dark" }) => {
         <Image src={CinemaAISVG} alt="CinemaAI Logo" width={200} height={200} />
       </div>
 
-      <div className="text-4xl font-bold tracking-wide">CinemaAI</div>
+      <div className="text-4xl font-bold tracking-wide">
+        Clara da Seminovos, Ruptura 2024
+      </div>
     </Link>
   )
 }
