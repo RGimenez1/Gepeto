@@ -76,7 +76,6 @@ export async function POST(request: Request) {
         }
       })
     }
-
     if (toolCalls.length > 0) {
       for (const toolCall of toolCalls) {
         const functionCall = toolCall.function
@@ -150,14 +149,24 @@ export async function POST(request: Request) {
             body: JSON.stringify(bodyContent) // Use the extracted requestBody or the entire parsedArgs
           }
 
+          console.log(
+            `Making POST request to ${fullUrl} with body:`,
+            bodyContent
+          )
+
           const response = await fetch(fullUrl, requestInit)
 
           if (!response.ok) {
             data = {
               error: response.statusText
             }
+            console.error(
+              `Error response from ${fullUrl}:`,
+              response.statusText
+            )
           } else {
             data = await response.json()
+            console.log(`Successful response from ${fullUrl}:`, data)
           }
         } else {
           // If the type is set to query
@@ -170,10 +179,13 @@ export async function POST(request: Request) {
           let headers = {}
 
           // Check if custom headers are set
+          //'{\n"client_id": "hSDqJbKYZgboV8WdnVYsSAEzK0JlpuUDhTcVKBlPytGclS6B",\n"origin": "https://seminovos.localiza.com",\n"referer": "https://seminovos.localiza.com"\n}'
           const customHeaders = schemaDetail.headers
           if (customHeaders && typeof customHeaders === "string") {
             headers = JSON.parse(customHeaders)
           }
+
+          console.log(`Making GET request to ${fullUrl}`)
 
           const response = await fetch(fullUrl, {
             method: "GET",
@@ -184,8 +196,13 @@ export async function POST(request: Request) {
             data = {
               error: response.statusText
             }
+            console.error(
+              `Error response from ${fullUrl}:`,
+              response.statusText
+            )
           } else {
             data = await response.json()
+            console.log(`Successful response from ${fullUrl}:`, data)
           }
         }
 
